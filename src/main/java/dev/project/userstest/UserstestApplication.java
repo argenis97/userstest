@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @SpringBootApplication
-@EntityScan("dev.project.userstest.entity")
+@EntityScan(basePackages = {"dev.project.userstest.persistence.entity"})
 public class UserstestApplication {
 
 	public static void main(String[] args) {
