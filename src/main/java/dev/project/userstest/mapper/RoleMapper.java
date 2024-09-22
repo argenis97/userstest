@@ -8,13 +8,13 @@ import org.mapstruct.*;
 public interface RoleMapper {
 
     @Mapping(source = "id", target = "roleID")
-    public RoleDTO toDTO(Role role);
+    RoleDTO toDTO(Role role);
 
     @InheritInverseConfiguration
-    public Role toRole(RoleDTO dto);
+    Role toRole(RoleDTO dto);
 
     @AfterMapping
-    public default void afterMapping(RoleDTO dto, @MappingTarget Role role){
+    default void afterMapping(RoleDTO dto, @MappingTarget Role role){
         role.getPermissions().forEach(permission -> permission.setRole(role));
     }
 }

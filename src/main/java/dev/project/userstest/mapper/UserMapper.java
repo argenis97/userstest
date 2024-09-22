@@ -12,12 +12,12 @@ import org.mapstruct.MappingTarget;
 public interface UserMapper {
 
     @Mapping(target = "roleID", expression = "java(user.getRole().getId())")
-    public UserDTO toDTO(AppUser user);
+    UserDTO toDTO(AppUser user);
 
-    public AppUser toUser(UserDTO dto);
+    AppUser toUser(UserDTO dto);
 
     @AfterMapping
-    public default void afterMappingUser(UserDTO dto, @MappingTarget AppUser user) {
+    default void afterMappingUser(UserDTO dto, @MappingTarget AppUser user) {
         Role role = new Role();
         role.setId(dto.getRoleID());
 

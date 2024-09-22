@@ -10,8 +10,8 @@ import org.mapstruct.Mapping;
 public interface PermissionMapper {
 
     @Mapping(source = "id", target = "permissionID")
-    public PermissionDTO toDTO(Permission permission);
+    PermissionDTO toDTO(Permission permission);
 
     @InheritInverseConfiguration
-    public Permission toPermission(PermissionDTO dto);
+    Permission toPermission(PermissionDTO dto);
 }
