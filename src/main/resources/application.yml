@@ -1,0 +1,11 @@
+spring:
+  application:
+    name: userstest
+  config:
+    import: classpath:/credentials.yml
+  profiles:
+    active: dev
+server:
+  port: ${PORT}
+  servlet:
+    context-path: /users/api
