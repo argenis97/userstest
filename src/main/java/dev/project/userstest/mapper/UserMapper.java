@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
@@ -15,6 +17,8 @@ public interface UserMapper {
     UserDTO toDTO(AppUser user);
 
     AppUser toUser(UserDTO dto);
+
+    List<UserDTO> toListUserDTO(List<AppUser> users);
 
     @AfterMapping
     default void afterMappingUser(UserDTO dto, @MappingTarget AppUser user) {
