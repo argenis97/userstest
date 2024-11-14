@@ -1,11 +1,15 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.UserDTO;
+import dev.project.userstest.dto.request.UpdateUserRequest;
+import dev.project.userstest.dto.request.UserRequestDTO;
+import dev.project.userstest.dto.response.UserResponseDTO;
 import dev.project.userstest.mapper.UserMapper;
 import dev.project.userstest.persistence.entity.AppUser;
 import dev.project.userstest.persistence.repository.UserRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,22 +19,42 @@ public class AppUserServiceImpl implements AppUserService {
 
     private final UserMapper mapper;
     private final UserRepository repository;
+    private final BCryptPasswordEncoder encoder;
 
-    public AppUserServiceImpl(UserMapper mapper, UserRepository repository) {
+    public AppUserServiceImpl(UserMapper mapper, UserRepository repository, BCryptPasswordEncoder encoder) {
         this.mapper = mapper;
         this.repository = repository;
+        this.encoder = encoder;
     }
 
     @Override
-    public List<UserDTO> findAll() {
-        return mapper.toListUserDTO(repository.findAll());
+    public List<UserResponseDTO> findAll() {
+        return mapper.toListResponse(repository.findAll());
     }
 
     @Override
     @Transactional
-    public UserDTO save(UserDTO user) {
-        AppUser entityUser = mapper.toUser(user);
-        return mapper.toDTO(repository.save(entityUser));
+    public UserResponseDTO save(UserRequestDTO user) {
+        AppUser entityUser = mapper.toEntity(user);
+        entityUser.setPassword(encoder.encode(user.getPassword()));
+
+        return mapper.toResponse(repository.save(entityUser));
+    }
+
+    @Override
+    @Transactional
+    public Optional<UserResponseDTO> update(Long id, UpdateUserRequest dto) {
+        return repository.findByIdLazy(id)
+                .map(user -> update(user, dto));
+    }
+
+    protected UserResponseDTO update(AppUser user, UpdateUserRequest dto) {
+        mapper.updateValues(dto, user);
+
+        if (StringUtils.hasText(dto.getPassword()))
+            user.setPassword(encoder.encode(dto.getPassword()));
+
+        return mapper.toResponse(repository.save(user));
     }
 
     @Override
@@ -44,24 +68,24 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public List<UserDTO> findByRoleID(Long roleID) {
-        return mapper.toListUserDTO(repository.findByRoleID(roleID));
+    public List<UserResponseDTO> findByRoleID(Long roleID) {
+        return mapper.toListResponse(repository.findByRoleID(roleID));
     }
 
     @Override
-    public Optional<UserDTO> findByID(Long userID) {
+    public Optional<UserResponseDTO> findByID(Long userID) {
         return repository.findById(userID)
-                .map(mapper::toDTO);
+                .map(mapper::toResponse);
     }
 
     @Override
-    public List<UserDTO> findByPermissionID(Long permissionID) {
-        return mapper.toListUserDTO(repository.findByPermissionID(permissionID));
+    public List<UserResponseDTO> findByPermissionID(Long permissionID) {
+        return mapper.toListResponse(repository.findByPermissionID(permissionID));
     }
 
     @Override
-    public Optional<UserDTO> findByName(String name) {
+    public Optional<UserResponseDTO> findByName(String name) {
         return repository.findByName(name)
-                .map(mapper::toDTO);
+                .map(mapper::toResponse);
     }
 }

@@ -1,6 +1,5 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.VendorDTO;
 import dev.project.userstest.mapper.VendorMapper;
 import dev.project.userstest.persistence.entity.Vendor;
 import dev.project.userstest.persistence.repository.VendorRepository;

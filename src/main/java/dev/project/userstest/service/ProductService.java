@@ -1,13 +1,14 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.ProductDTO;
+import dev.project.userstest.dto.request.ProductRequestDTO;
+import dev.project.userstest.dto.response.ProductResponseDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
-    ProductDTO save(ProductDTO dto);
-    Optional<ProductDTO> findById(Long id);
+    ProductResponseDTO save(ProductRequestDTO dto);
+    Optional<ProductResponseDTO> findById(Long id);
     boolean delete(Long id);
-    List<ProductDTO> findAll();
+    List<ProductResponseDTO> findAll();
 }

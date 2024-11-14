@@ -1,6 +1,5 @@
 package dev.project.userstest.controller;
 
-import dev.project.userstest.dto.PermissionDTO;
 import dev.project.userstest.service.PermissionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

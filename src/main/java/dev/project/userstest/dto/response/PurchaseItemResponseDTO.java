@@ -1,4 +1,4 @@
-package dev.project.userstest.dto;
+package dev.project.userstest.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -6,11 +6,12 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Data
-public class PurchaseItemDTO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class PurchaseItemResponseDTO {
     private BigDecimal qtyTrx;
     private BigDecimal priceTrx;
-    private Long productID;
+    private Long productId;
+    private Long itemId;
 }

@@ -1,18 +1,19 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.PermissionDTO;
+import dev.project.userstest.dto.request.PermissionRequestDTO;
+import dev.project.userstest.dto.response.PermissionResponseDTO;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface PermissionService {
-    Optional<PermissionDTO> findById(Long id);
+    Optional<PermissionResponseDTO> findById(Long id);
 
-    public PermissionDTO save(PermissionDTO permission);
+    public PermissionResponseDTO save(PermissionRequestDTO permission);
 
-    public List<PermissionDTO> findAll();
+    public List<PermissionResponseDTO> findAll();
 
     public boolean delete(Long id);
 
-    public List<PermissionDTO> findByUserID(Long userID);
+    public List<PermissionResponseDTO> findByUserID(Long userID);
 }

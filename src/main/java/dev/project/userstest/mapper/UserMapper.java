@@ -1,30 +1,29 @@
 package dev.project.userstest.mapper;
 
-import dev.project.userstest.dto.UserDTO;
+import dev.project.userstest.dto.request.UpdateUserRequest;
+import dev.project.userstest.dto.request.UserRequestDTO;
+import dev.project.userstest.dto.response.UserResponseDTO;
 import dev.project.userstest.persistence.entity.AppUser;
-import dev.project.userstest.persistence.entity.Role;
-import org.mapstruct.AfterMapping;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.MappingTarget;
+import org.mapstruct.*;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    @Mapping(target = "roleID", expression = "java(user.getRole().getId())")
-    UserDTO toDTO(AppUser user);
+    @Mapping(source = "id", target = "userId")
+    @Mapping(source = "name", target = "userName")
+    @Mapping(source = "role.id", target = "roleId")
+    UserResponseDTO toResponse(AppUser user);
 
-    AppUser toUser(UserDTO dto);
+    @Mapping(source = "userName", target = "name")
+    @Mapping(source = "roleId", target = "role.id")
+    @Mapping(target = "password", ignore = true)
+    AppUser toEntity(UserRequestDTO request);
 
-    List<UserDTO> toListUserDTO(List<AppUser> users);
+    @Mapping(source = "roleId", target = "role.id")
+    @Mapping(target = "password", ignore = true)
+    void updateValues(UpdateUserRequest dto, @MappingTarget AppUser user);
 
-    @AfterMapping
-    default void afterMappingUser(UserDTO dto, @MappingTarget AppUser user) {
-        Role role = new Role();
-        role.setId(dto.getRoleID());
-
-        user.setRole(role);
-    }
+    List<UserResponseDTO> toListResponse(List<AppUser> users);
 }

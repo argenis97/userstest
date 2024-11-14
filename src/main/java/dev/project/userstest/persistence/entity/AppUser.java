@@ -21,6 +21,9 @@ public class AppUser {
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
+    @Column(name = "password")
+    private String password;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

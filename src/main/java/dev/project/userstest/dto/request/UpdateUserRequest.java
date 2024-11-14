@@ -1,4 +1,4 @@
-package dev.project.userstest.dto;
+package dev.project.userstest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PermissionDTO {
-    private Long permissionID;
-    private String name;
+public class UpdateUserRequest {
+    private Long roleId;
+    private String password;
 }

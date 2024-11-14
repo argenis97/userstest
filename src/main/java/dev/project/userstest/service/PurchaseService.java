@@ -1,7 +1,5 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.PurchaseDTO;
-
 import java.util.List;
 import java.util.Optional;
 

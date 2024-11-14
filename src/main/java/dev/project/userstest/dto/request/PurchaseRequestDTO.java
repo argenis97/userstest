@@ -1,4 +1,4 @@
-package dev.project.userstest.dto;
+package dev.project.userstest.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +10,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class PurchaseDTO {
-
-    private Long purchaseID;
-    private Long vendorID;
+public class PurchaseRequestDTO {
+    private Long vendorId;
     private LocalDateTime dateTrx;
-    private String status;
+    private String purchaseStatus;
 
-    private List<PurchaseItemDTO> items;
+    private List<PurchaseItemRequestDTO> purchaseItems;
 }

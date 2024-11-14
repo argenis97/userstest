@@ -1,6 +1,5 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.PurchaseDTO;
 import dev.project.userstest.mapper.PurchaseMapper;
 import dev.project.userstest.persistence.entity.Purchase;
 import dev.project.userstest.persistence.repository.PurchaseRepository;

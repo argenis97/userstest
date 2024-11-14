@@ -1,6 +1,7 @@
 package dev.project.userstest.persistence.repository;
 
 import dev.project.userstest.persistence.entity.AppUser;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,4 +20,8 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
     List<AppUser> findByPermissionID(@Param("permissionID") Long permissionID);
 
     Optional<AppUser> findByName(String name);
+
+    @Query("select usr from AppUser usr where usr.id = :id")
+    @EntityGraph(attributePaths = {})
+    Optional<AppUser> findByIdLazy(@Param("id") Long id);
 }

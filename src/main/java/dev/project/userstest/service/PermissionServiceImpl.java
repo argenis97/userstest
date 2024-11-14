@@ -1,6 +1,7 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.PermissionDTO;
+import dev.project.userstest.dto.request.PermissionRequestDTO;
+import dev.project.userstest.dto.response.PermissionResponseDTO;
 import dev.project.userstest.mapper.PermissionMapper;
 import dev.project.userstest.persistence.entity.Permission;
 import dev.project.userstest.persistence.repository.PermissionRepository;
@@ -23,23 +24,23 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Optional<PermissionDTO> findById(Long id) {
+    public Optional<PermissionResponseDTO> findById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDTO);
+                .map(mapper::toResponse);
     }
 
     @Override
     @Transactional
-    public PermissionDTO save(PermissionDTO permission) {
-        Permission permissionEntity = mapper.toPermission(permission);
+    public PermissionResponseDTO save(PermissionRequestDTO permission) {
+        Permission permissionEntity = mapper.toEntity(permission);
         permissionEntity = repository.save(permissionEntity);
 
-        return mapper.toDTO(permissionEntity);
+        return mapper.toResponse(permissionEntity);
     }
 
     @Override
-    public List<PermissionDTO> findAll() {
-        return mapper.toDTOList(repository.findAll());
+    public List<PermissionResponseDTO> findAll() {
+        return mapper.toListResponse(repository.findAll());
     }
 
     @Override
@@ -53,7 +54,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public List<PermissionDTO> findByUserID(Long userID) {
-        return mapper.toDTOList(repository.findByUserID(userID));
+    public List<PermissionResponseDTO> findByUserID(Long userID) {
+        return mapper.toListResponse(repository.findByUserID(userID));
     }
 }

@@ -1,6 +1,7 @@
 package dev.project.userstest.service;
 
-import dev.project.userstest.dto.ProductDTO;
+import dev.project.userstest.dto.request.ProductRequestDTO;
+import dev.project.userstest.dto.response.ProductResponseDTO;
 import dev.project.userstest.mapper.ProductMapper;
 import dev.project.userstest.persistence.entity.Product;
 import dev.project.userstest.persistence.repository.ProductRepository;
@@ -23,17 +24,15 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     @Transactional
-    public ProductDTO save(ProductDTO dto) {
-
+    public ProductResponseDTO save(ProductRequestDTO dto) {
         Product product = mapper.toEntity(dto);
-
-        return mapper.toDTO(repository.save(product));
+        return mapper.toResponse(repository.save(product));
     }
 
     @Override
-    public Optional<ProductDTO> findById(Long id) {
+    public Optional<ProductResponseDTO> findById(Long id) {
         return repository.findById(id)
-                .map(mapper::toDTO);
+                .map(mapper::toResponse);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> findAll() {
-        return List.of();
+    public List<ProductResponseDTO> findAll() {
+        return mapper.toListResponse(repository.findAll());
     }
 }
